@@ -1,5 +1,6 @@
 <template>
   <input class="form-control"
+        readonly
         size="16"
         type="text">
 </template>
@@ -13,6 +14,8 @@ export default {
       type: String,
       'default': T.dateTimePickerFormat,
     },
+    start: {type: Date, 'default': null},
+    finish: {type: Date, 'default': null},
   },
   data: function() { return {};},
   watch: {
@@ -32,6 +35,12 @@ export default {
           self.$emit('input', $(self.$el).data('datetimepicker').getDate());
         });
     $(this.$el).data('datetimepicker').setDate(this.value);
+    if (this.start != null) {
+      $(this.$el).data('datetimepicker').setStartDate(this.start);
+    }
+    if (this.finish != null) {
+      $(this.$el).data('datetimepicker').setEndDate(this.finish);
+    }
   },
 };
 </script>

@@ -139,6 +139,21 @@ OmegaUp.on('ready', function() {
                       })
                       .fail(UI.apiError);
                 },
+                'save-end-time': function(ev) {
+                  API.Contest.updateEndTimeForIdentity({
+                               contest_alias: contestAlias,
+                               username: ev.selected.username,
+                               end_time:
+                                   (ev.selected.end_time.getTime()) / 1000,
+                             })
+                      .then(function(response) {
+                        if (response.status != 'ok') {
+                          UI.error(response.error || 'error');
+                        }
+                        UI.success(T.userEndTimeUpdatedSuccessfully);
+                      })
+                      .fail(UI.apiError);
+                },
                 'clone-contest': function(ev) {
                   API.Contest.clone({
                                contest_alias: contestAlias,

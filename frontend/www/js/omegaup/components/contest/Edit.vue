@@ -56,7 +56,8 @@
       </div>
       <div class="tab-pane active contestants"
            v-if="showTab === 'contestants'">
-        <omegaup-contest-contestant v-bind:data="users"></omegaup-contest-contestant>
+        <omegaup-contest-contestant v-bind:contest="contest"
+             v-bind:data="users"></omegaup-contest-contestant>
       </div>
       <div class="tab-pane active"
            v-if="showTab === 'admins'">

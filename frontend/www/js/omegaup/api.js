@@ -179,7 +179,19 @@ export default {
 
     update: _call('/api/contest/update/'),
 
-    users: _call('/api/contest/users/'),
+    updateEndTimeForIdentity: _call('/api/contest/updateEndTimeForIdentity/'),
+
+    users: _call('/api/contest/users/',
+                 function(response) {
+                   for (var idx in response.users) {
+                     var user = response.users[idx];
+                     if (user.end_time == null) {
+                       continue;
+                     }
+                     omegaup.OmegaUp.convertTimes(user);
+                   }
+                   return response;
+                 }),
   },
 
   Course: {
