@@ -126,6 +126,8 @@ export default {
                             return data;
                           }),
 
+    contestants: _call('/api/contest/contestants/'),
+
     create: _call('/api/contest/create/'),
 
     createVirtual: _call('/api/contest/createvirtual'),
