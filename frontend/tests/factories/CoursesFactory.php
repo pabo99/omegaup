@@ -64,6 +64,7 @@ class CoursesFactory {
         // Create the course
         $courseFactoryResult = self::createCourse($admin, $adminLogin, $public, $requestsUserInformation, $showScoreboard);
         $courseAlias = $courseFactoryResult['course_alias'];
+        $course = CoursesDAO::getByAlias($courseAlias);
 
         // Create the assignment
         $assignmentAlias = Utils::CreateRandomString();
@@ -77,9 +78,9 @@ class CoursesFactory {
             'finish_time' => Utils::GetPhpUnixTimestamp() + 120,
             'course_alias' => $courseAlias,
             'assignment_type' => 'homework',
+            'course' => $course,
         ]);
         $assignmentResult = CourseController::apiCreateAssignment($r);
-        $course = CoursesDAO::getByAlias($courseAlias);
         $assignment = AssignmentsDAO::getByAliasAndCourse($assignmentAlias, $course->course_id);
         return [
             'course_alias' => $courseAlias,
