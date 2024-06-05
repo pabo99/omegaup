@@ -36,6 +36,7 @@ let store = new Vuex.Store({
     alias: null,
     showSubmitButton: false,
     languages: [],
+    currentLanguage: 'cpp17-gcc',
     sessionStorageSources: null,
     request: {
       input: {
@@ -60,6 +61,9 @@ let store = new Vuex.Store({
     },
     languages(state) {
       return state.languages;
+    },
+    currentLanguage(state) {
+      return state.currentLanguage;
     },
     sessionStorageSources(state) {
       return state.sessionStorageSources;
@@ -228,7 +232,7 @@ let store = new Vuex.Store({
       }
     },
     languages(state, value) {
-      state.languages = value;
+      state.languages = value.languages;
       document
         .querySelectorAll('select[data-language-select] option')
         .forEach((option) => {
@@ -238,9 +242,19 @@ let store = new Vuex.Store({
             option.classList.remove('d-none');
           }
         });
+      const selectElement = document.querySelector(
+        'select[data-language-select]',
+      );
+      selectElement.value = value.currentLanguage;
+
+      const event = new Event('change');
+      selectElement.dispatchEvent(event);
     },
     currentCase(state, value) {
       state.currentCase = value;
+    },
+    currentLanguage(state, value) {
+      state.currentLanguage = value;
     },
     compilerOutput(state, value) {
       state.compilerOutput = value;

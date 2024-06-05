@@ -16,6 +16,7 @@ export default class EphemeralGrader extends Vue {
   @Prop() problem!: types.ProblemInfo;
   @Prop({ default: false }) canSubmit!: boolean;
   @Prop({ default: () => [] }) acceptedLanguages!: string[];
+  @Prop() currentLanguage!: string;
 
   loaded = false;
 
@@ -42,6 +43,7 @@ export default class EphemeralGrader extends Vue {
           settings: this.problem.settings,
           languages: this.acceptedLanguages,
           showSubmitButton: this.canSubmit,
+          currentLanguage: this.currentLanguage,
         },
       },
       `${window.location.origin}/grader/ephemeral/embedded/`,

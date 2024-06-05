@@ -889,7 +889,13 @@ runButton.addEventListener('click', () => {
     .catch(Util.asyncError);
 });
 
-function setSettings({ alias, settings, languages, showSubmitButton }) {
+function setSettings({
+  alias,
+  settings,
+  languages,
+  showSubmitButton,
+  currentLanguage,
+}) {
   if (!settings) {
     return;
   }
@@ -908,12 +914,13 @@ function setSettings({ alias, settings, languages, showSubmitButton }) {
       }
     }
   }
-  store.commit('languages', languages);
+  store.commit('languages', { languages, currentLanguage });
   store.commit('updatingSettings', true);
   store.commit('reset');
   store.commit('Interactive', !!settings.interactive);
   store.commit('alias', alias);
   store.commit('showSubmitButton', showSubmitButton);
+  store.commit('currentLanguage', currentLanguage);
   store.commit('removeCase', 'long');
   store.commit('MemoryLimit', settings.limits.MemoryLimit * 1024);
   store.commit('OutputLimit', settings.limits.OutputLimit);
@@ -975,6 +982,7 @@ window.addEventListener(
           settings: e.data.params.settings,
           showSubmitButton: e.data.params.showSubmitButton,
           languages: e.data.params.languages,
+          currentLanguage: e.data.params.currentLanguage,
         });
         break;
     }
